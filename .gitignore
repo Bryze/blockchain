@@ -3,3 +3,4 @@ node_modules/
 .DS_Store
 tutorial.md
 package-lock.json
+.idea/
