@@ -5,6 +5,23 @@
     <title>Title</title>
 </head>
 <body>
-assdasdasd
+Test Blockchain poc
 </body>
+
+<script>
+    let coin = App.getInstance();
+    coin.getBlockChainObject().addBlock(coin.getNewBlockObject(1, '02/12/2017', {amount: 4}));
+    coin.getBlockChainObject().addBlock(coin.getNewBlockObject(2, '03/12/2017', {amount: 5}));
+
+    console.log(coin.getBlockChainObject().getChain()); //get the full blockchain object
+
+    console.log('is blockchainvalid - '+coin.getBlockChainObject().isChainValid()); //check blockchain object
+
+    coin.getBlockChainObject().getChain()[1].data = {amount: 50}; //change intermediate blockchain object
+    console.log('is blockchainvalid - '+coin.getBlockChainObject().isChainValid()); //will return false and hash will mismatch
+
+    coin.getBlockChainObject().getChain()[1].hash = coin.getBlockChainObject().getChain()[1].calculateHash(); //calculate new hash so that hash of current object will match
+    console.log('is blockchainvalid - '+coin.getBlockChainObject().isChainValid()); //will return false as previousHash will not match the current hash
+
+</script>
 </html>
