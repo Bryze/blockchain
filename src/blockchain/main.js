@@ -3,6 +3,7 @@
  */
 import Blockchain from "./blockchain";
 import Block from "./block";
+import Transaction from "./transaction";
 
 let App = (function () {
     let instance = null;
@@ -39,6 +40,11 @@ class BChain {
     getNewBlockchainObject() {
         return new Blockchain();
     }
+
+    getNewTransactionObject(fromAddress,toAddress,amount) {
+        return new Transaction(fromAddress,toAddress,amount);
+    }
+
 }
 
 window.App = App;
