@@ -33,16 +33,16 @@ class BChain {
         return this.blockChain;
     }
 
-    getNewBlockObject(index,timeStamp,data,previousHash) {
-        return new Block(index,timeStamp,data,previousHash);
+    getNewBlockObject(index, timeStamp, data, previousHash) {
+        return new Block(index, timeStamp, data, previousHash);
     }
 
     getNewBlockchainObject() {
         return new Blockchain();
     }
 
-    getNewTransactionObject(fromAddress,toAddress,amount) {
-        return new Transaction(fromAddress,toAddress,amount);
+    getNewTransactionObject(fromAddress, toAddress, amount) {
+        return new Transaction(fromAddress, toAddress, amount);
     }
 
 }
