@@ -24,6 +24,15 @@ class ProjectSelector extends Component {
         this.props.history.push(route);
     };
 
+    componentDidMount() {
+        let redirectTo = new URLSearchParams(window.location.search).get('redirectTo');
+        switch(redirectTo) {
+            case 'voter-success':
+                this.props.history.push('/voter-success');
+                break;
+        }
+    }
+
     render() {
         const {anchorEl} = this.state;
 
@@ -42,7 +51,7 @@ class ProjectSelector extends Component {
                     open={Boolean(anchorEl)}
                     onClose={this.handleClose}
                 >
-                    <MenuItem onClick={() => this.handleMenuItemClick('wallet')}>Wallet</MenuItem>
+                    <MenuItem onClick={() => this.handleMenuItemClick('vote')}>Voting</MenuItem>
                 </Menu>
             </div>
         );
