@@ -22,6 +22,7 @@ class Auth extends Credentials {
     createFirebaseLogin(redirectUrl, div, serviceUrl = '') {
         let config = {
             signInSuccessUrl: redirectUrl,
+            credentialHelper: 'none',
             signInOptions: [
                 this.getFirebaseObject().auth.EmailAuthProvider.PROVIDER_ID,
             ],
