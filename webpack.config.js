@@ -13,37 +13,43 @@ var HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
 });
 
 const extractScss = new ExtractTextPlugin({
-  filename: 'index.css',
-  disable: isDev
+    filename: 'index.css',
+    disable: isDev
 });
 
 module.exports = {
-  entry: {
-    bundle: './src/index.js'
-  },
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
-  },
-  plugins: [
-      HTMLWebpackPluginConfig,
-    extractScss
-  ],
-  module: {
-    rules: [{
-      test: /\.js$/,
-      exclude: /node_modules/,
-      use: 'babel-loader'
-    }, {
-      test: /(\.css|\.scss)$/,
-      exclude: /node_modules/,
-      use: extractScss.extract({
-        use:[
-          {loader: 'css-loader'},
-          {loader: 'sass-loader'}
-        ],
-        fallback: 'style-loader'
-      })
-    }]
-  }
+    entry: {
+        bundle: './src/index.js'
+    },
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'bundle.js',
+        publicPath: "/"
+    },
+    plugins: [
+        HTMLWebpackPluginConfig,
+        extractScss
+    ],
+    module: {
+        rules: [{
+            test: /\.js$/,
+            exclude: /node_modules/,
+            use: 'babel-loader'
+        }, {
+            test: /(\.css|\.scss)$/,
+            exclude: /node_modules/,
+            use: extractScss.extract({
+                use: [
+                    {loader: 'css-loader'},
+                    {loader: 'sass-loader'}
+                ],
+                fallback: 'style-loader'
+            })
+        }]
+    },
+    devServer: {
+        historyApiFallback: true,
+        contentBase: './',
+        hot: true
+    },
 };
