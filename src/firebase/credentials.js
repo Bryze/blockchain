@@ -19,6 +19,14 @@ class Credentials {
 
     getFirebaseObject = () => {
         return firebase;
+    };
+
+    getFDBO = () => {
+        return this.getFirebaseObject().database();
+    };
+
+    getFAuth = () => {
+        return this.getFirebaseObject().auth();
     }
 }
 
