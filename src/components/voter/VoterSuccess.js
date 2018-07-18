@@ -3,15 +3,26 @@
  */
 import React, {Component} from 'react';
 import Base from './Base';
+import Registration from "./Registration";
 
 class VoterSuccess extends Base {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            loadingText: 'Initializing Firebase...',
+            isLoading: true,
+            uid: null
+        }
+    }
+
     componentDidMount() {
-        Authentication.getInstance().subscribeEvent('firebaseUserInit', function(response) {
+        const instance = this;
+        Authentication.getInstance().subscribeEvent('firebaseUserInit', function (response) {
             let uid = response.uid;
             Authentication.getInstance().getFDBO().ref('/voting').once('value').then(
                 snapshot => {
-                    if(!snapshot.val()) {
+                    if (!snapshot.val()) {
                         Authentication.getInstance().getFDBO().ref().child('voting').set(
                             {
                                 'blockChain': 0,
@@ -22,13 +33,22 @@ class VoterSuccess extends Base {
                         );
                     }
                 }
-            )
+            );
+            instance.setState({
+                loadingText: 'Firebase has initialized..',
+                uid: uid,
+                isLoading: false
+            })
         });
     }
 
     render() {
         return (
-            <div>Hello</div>
+            <div>
+                <div>Project Selected - Voting </div>
+                <div>{this.state.loadingText}</div>
+                {!this.state.isLoading && <Registration uid={this.state.uid} />}
+            </div>
         );
     }
 }
