@@ -22,6 +22,7 @@ class ProjectSelector extends Component {
 
     handleMenuItemClick = (route) => {
         this.props.history.push(route);
+        this.handleClose();
     };
 
     componentDidMount() {
