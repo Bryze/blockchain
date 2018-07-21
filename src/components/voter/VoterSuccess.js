@@ -4,6 +4,7 @@
 import React, {Component} from 'react';
 import Base from './Base';
 import Registration from "./Registration";
+import VoteScreen from "./VoteScreen";
 
 class VoterSuccess extends Base {
 
@@ -12,9 +13,16 @@ class VoterSuccess extends Base {
         this.state = {
             loadingText: 'Initializing Firebase...',
             isLoading: true,
-            uid: null
+            uid: null,
+            role: null
         }
     }
+
+    updateRole = (role) => {
+        this.setState({
+            role: role
+        });
+    };
 
     componentDidMount() {
         const instance = this;
@@ -47,7 +55,8 @@ class VoterSuccess extends Base {
             <div>
                 <div>Project Selected - Voting </div>
                 <div>{this.state.loadingText}</div>
-                {!this.state.isLoading && <Registration uid={this.state.uid} />}
+                {!this.state.isLoading && <Registration uid={this.state.uid} updateRole={this.updateRole} />}
+                {this.state.role && <VoteScreen role={this.state.role} />}
             </div>
         );
     }
