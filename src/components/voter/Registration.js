@@ -30,7 +30,8 @@ class Registration extends Component {
                 } else {
                     instance.setState({
                         initialText: 'Current assigned role - ' + snapshot.val()
-                    })
+                    });
+                    instance.props.updateRole(snapshot.val());
                 }
             }
         );
@@ -72,7 +73,8 @@ class Registration extends Component {
             } else {
                 instance.setState({
                     initialText: 'Role updated to -- '+role
-                })
+                });
+                instance.props.updateRole(role);
             }
         })
     };
