@@ -5,6 +5,7 @@ import React, {Component} from 'react';
 import Base from './Base';
 import Registration from "./Registration";
 import VoteScreen from "./VoteScreen";
+import Miner from "./Miner";
 
 class VoterSuccess extends Base {
 
@@ -56,7 +57,8 @@ class VoterSuccess extends Base {
                 <div>Project Selected - Voting </div>
                 <div>{this.state.loadingText}</div>
                 {!this.state.isLoading && <Registration uid={this.state.uid} updateRole={this.updateRole} />}
-                {this.state.role && <VoteScreen role={this.state.role} />}
+                {this.state.role==='guest' && <VoteScreen />}
+                {this.state.role==='miner' && <Miner uid={this.state.uid} />}
             </div>
         );
     }
