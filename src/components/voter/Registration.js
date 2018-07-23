@@ -63,7 +63,7 @@ class Registration extends Component {
         instance.setState({
             initialText: 'Updating Role...'
         });
-        Authentication.getInstance().getFDBO().ref('voting/roles').set({
+        Authentication.getInstance().getFDBO().ref('voting/roles').update({
             [instance.props.uid]: role
         }, function(error) {
             if(error) {
