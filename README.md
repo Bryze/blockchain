@@ -10,5 +10,8 @@ List of current implemented functionalities
     4. Miner reward based on successfully mined block
     5. Calculate balance of a payment address
 2. A singleton App class that encapsulates Block, Blockchain and Transaction class for better handling across multiple use case scenarios
+3. Implemented firebase functionalities which includes :-
+    1. Login (Email Authentication)
+    2. Realtime database insert, fetch and update
 
 To be updated in subsequent days...
