@@ -78,6 +78,11 @@ class Blockchain {
     getChain() {
         return this.chain;
     }
+
+    syncBlocks(block) {
+        this.chain.push(block);
+        return this;
+    }
 }
 
 export default Blockchain;
