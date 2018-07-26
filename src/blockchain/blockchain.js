@@ -8,9 +8,10 @@ class Blockchain {
 
     constructor() {
         this.chain = [this.createGenesisBlock()];
-        this.difficulty = 2;
+        this.difficulty = 4;
         this.pendingTransactions = [];
         this.miningReward = 100;
+        this.hashesComputed = 0;
     }
 
     createGenesisBlock() {
@@ -30,6 +31,7 @@ class Blockchain {
     minePendingTransactions(miningRewardAddress) {
         let block = new Block(Date.now(), this.pendingTransactions, this.getLatestBlock().hash);
         block.mineBlock(this.difficulty);
+        this.hashesComputed = block.getNonce();
         console.log('Block successfully mined');
         this.chain.push(block);
 
@@ -82,6 +84,10 @@ class Blockchain {
     syncBlocks(block) {
         this.chain.push(block);
         return this;
+    }
+
+    getHashesComputed() {
+        return this.hashesComputed;
     }
 }
 
