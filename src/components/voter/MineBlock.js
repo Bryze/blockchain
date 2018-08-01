@@ -2,6 +2,7 @@
  * Created by Aseem on 25-07-2018.
  */
 import React, {Component} from 'react';
+import Block from '../../blockchain/block';
 
 class MineBlock extends Component {
     constructor(props) {
@@ -29,20 +30,42 @@ class MineBlock extends Component {
         });
     };
 
+    getMinerPendingTransactions = () => {
+        return Authentication.getInstance().getFDBO().ref('/voting/miners/' + this.props.uid + '/pendingTransactions').once('value');
+    };
+
     componentDidMount() {
         Authentication.getInstance().getFDBO().ref('/voting/blockChain').once('value').then(
             snapshot => {
                 if (!snapshot.val()) {
-                    Authentication.getInstance().getFDBO().ref('/voting/miners/' + this.props.uid + '/pendingTransactions').once('value').then(
+                    this.getMinerPendingTransactions().then(
                         data => {
                             this.setState({
                                 statusText: 'Transactions fetched. Mining transactions'
                             });
                             this.processPendingTransactions(data.val());
+                            Authentication.getInstance().getFDBO().ref('/voting/miners').child(this.props.uid).update({
+                                pendingTransactions: 0
+                            });
                         }
                     );
                 } else {
-                    //sync already existing blockchain object
+                    for (let i = 1; i < snapshot.val().length; i++) {
+                        let item = snapshot.val()[i];
+                        let block = new Block(item.timeStamp, item.transactions, item.previousHash, item.hash, item.nonce);
+                        App.getInstance().getBlockChainObject().syncBlocks(block);
+                    }
+                    this.getMinerPendingTransactions().then(
+                        data => {
+                            this.setState({
+                                statusText: 'Transactions synced. Mining pending transactions'
+                            });
+                            this.processPendingTransactions(data.val());
+                            Authentication.getInstance().getFDBO().ref('/voting/miners').child(this.props.uid).update({
+                                pendingTransactions: 0
+                            });
+                        }
+                    );
                 }
             }
         )
