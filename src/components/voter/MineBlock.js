@@ -50,10 +50,12 @@ class MineBlock extends Component {
                         }
                     );
                 } else {
-                    for (let i = 1; i < snapshot.val().length; i++) {
-                        let item = snapshot.val()[i];
-                        let block = new Block(item.timeStamp, item.transactions, item.previousHash, item.hash, item.nonce);
-                        App.getInstance().getBlockChainObject().syncBlocks(block);
+                    if(!App.getInstance().getBlockChainObject().getChain().length) {
+                        for (let i = 1; i < snapshot.val().length; i++) {
+                            let item = snapshot.val()[i];
+                            let block = new Block(item.timeStamp, item.transactions, item.previousHash, item.hash, item.nonce);
+                            App.getInstance().getBlockChainObject().syncBlocks(block);
+                        }
                     }
                     this.getMinerPendingTransactions().then(
                         data => {

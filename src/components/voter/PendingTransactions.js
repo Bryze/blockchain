@@ -16,7 +16,7 @@ class PendingTransactions extends Component
     fetchPendingTransactions = () => {
       Authentication.getInstance().getFDBO().ref('/voting/pendingTransactions').once('value').then(
           snapshot => {
-             if(snapshot.val()!==0) {
+             if(snapshot.val()) {
                  Authentication.getInstance().getFDBO().ref('/voting/miners/').child(this.props.uid).update({
                      pendingTransactions: snapshot.val()
                  });

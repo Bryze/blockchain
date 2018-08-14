@@ -5,6 +5,7 @@ import React, {Component} from 'react';
 import Button from "@material-ui/core//Button";
 import PendingTransactions from "./PendingTransactions";
 import MineBlock from "./MineBlock";
+import ComputeResult from "./ComputeResult";
 
 class Miner extends Component {
     constructor(props) {
@@ -79,6 +80,7 @@ class Miner extends Component {
                 }
                 {!this.state.isLoading && <PendingTransactions {...this.props} updatePendingTransactions={this.updatePendingTransactionStatus}/>}
                 {this.state.hasPendingTransactions && <MineBlock {...this.props} />}
+                {!this.state.isLoading && <ComputeResult {...this.props}/> }
             </div>
         )
     }
